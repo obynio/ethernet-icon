@@ -19,8 +19,8 @@ A simple and lightweight macOS menu bar application that shows your Ethernet con
 3. Drag the app to your Applications folder
 4. Double click to start the app
 5. If the app cannot be opened due to security warnings:
-	- Go to System Preferences > Security & Privacy > Scroll down to "Security".
-	- Click Open Anyway next to the blocked app.
+	- Go to System Preferences > Security & Privacy > Scroll down to "Security"
+	- Click Open Anyway next to the blocked app
 7. (Optional) Click the menu bar icon and select Settings to customize
 
 ## Usage
