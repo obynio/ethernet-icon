@@ -2,7 +2,7 @@
 
 A simple and lightweight macOS menu bar application that shows your Ethernet connection status at a glance.
 
-![test](https://i.ibb.co/VDvzbRD/SCR-20241106-laat.png)
+![Different icon styles](https://i.ibb.co/4Wpm9NR/SCR-20241106-mtht.png)
 
 ## Features
 - 🔌 Live ethernet connection status monitoring
@@ -18,9 +18,9 @@ A simple and lightweight macOS menu bar application that shows your Ethernet con
 2. Unzip the downloaded file
 3. Drag the app to your Applications folder
 4. Double click to start the app
-5. (Optional) If the app cannot be opened due to security warnings:
-   - Go to System Preferences > Security & Privacy > General.
-	 - Click Open Anyway next to the blocked app.
+5. If the app cannot be opened due to security warnings:
+	- Go to System Preferences > Security & Privacy > General.
+	- Click Open Anyway next to the blocked app.
 7. (Optional) Click the menu bar icon and select Settings to customize
 
 ## Usage
