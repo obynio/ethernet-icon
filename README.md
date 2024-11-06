@@ -1,4 +1,4 @@
-# Easy Ethernet Icon
+# Easy Ethernet Icon for macOS
 
 A simple and lightweight macOS menu bar application that shows your Ethernet connection status at a glance.
 
