@@ -69,6 +69,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             width: self.fixedImageSize,
             height: self.fixedImageSize
         )
+        self.statusBarItem.button?.image?.isTemplate = true
     }
     
     /// Returns the appropriate icon image based on connection status and user settings

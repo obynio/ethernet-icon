@@ -4,7 +4,7 @@ import LaunchAtLogin
 /// View that handles application settings
 struct SettingsView: View {
     // Persisted storage for the selected icon style
-    @AppStorage("selectedOption") var selectedOption: String = "Select an Option"
+    @AppStorage("selectedOption") var selectedOption: String = "macOS"
     
     var body: some View {
         VStack(alignment: .leading) {
