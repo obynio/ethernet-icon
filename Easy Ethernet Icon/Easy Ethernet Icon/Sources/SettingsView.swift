@@ -33,6 +33,7 @@ struct SettingsView: View {
                     .buttonStyle(PlainButtonStyle())
                 }
             }
+            .navigationTitle("Settings")
             .background(Color(NSColor.windowBackgroundColor).opacity(0.9))
             .cornerRadius(8)
             .padding(.horizontal, 20)
@@ -133,12 +134,16 @@ struct GeneralSettingsView: View {
     }
 }
 
-/// Network settings view content placeholder
 struct NetworkSettingsView: View {
+    @AppStorage("selectedOption") var disableWifiOnEthernet: Bool = false
+    
     var body: some View {
-        Text("Network Settings")
-            .font(.system(size: 14, weight: .regular))
-            .foregroundColor(.secondary)
+        HStack {
+            Text("Disable WiFi on Ethernet")
+            Toggle("", isOn: $disableWifiOnEthernet)
+                .labelsHidden() // Versteckt das Label des Toggles
+        }
+        .padding()
     }
 }
 
