@@ -6,6 +6,7 @@ A simple and lightweight macOS menu bar application that shows your Ethernet con
 
 ## Features
 - 🔌 Live ethernet connection status monitoring
+- 📊 Live connection speed monitoring 
 - 🎨 Choice between macOS and Windows style icons
 - 🚀 Launch at Login support
 - 🏃‍♂️ Lightweight and efficient
