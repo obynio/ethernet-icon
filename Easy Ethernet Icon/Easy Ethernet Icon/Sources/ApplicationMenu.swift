@@ -19,6 +19,11 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
         action: nil,
         keyEquivalent: ""
     )
+    let speedStatusItem = NSMenuItem(
+        title: "Speed: -",
+        action: nil,
+        keyEquivalent: ""
+    )
     let quitApplicationItem = NSMenuItem(
         title: "Quit Application",
         action: #selector(quitApplication),
@@ -38,9 +43,53 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
     // Settings window reference
     var settingsPanel: NSPanel?
     
+    // Reference to NetworkMonitor
+    private let networkMonitor = NetworkMonitor()
+    
     override init() {
         super.init()
         setupMenuItems()
+        setupSpeedMonitoring()
+        
+        // Observe changes to showConnectionSpeed setting
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleSpeedSettingChange),
+            name: UserDefaults.didChangeNotification,
+            object: nil
+        )
+    }
+    
+    private func setupSpeedMonitoring() {
+        // Setup speed monitoring callback
+        networkMonitor.onSpeedUpdate = { [weak self] download, upload in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                let unit = UserDefaults.standard.string(forKey: "speedUnit") ?? "MB/s"
+                let speedText = String(format: "Speed: %.0f %@ ↓ | %.0f %@ ↑", download, unit, upload, unit)
+                self.speedStatusItem.title = speedText
+            }
+        }
+        
+        // Start monitoring only if enabled in settings
+        updateSpeedMonitoring()
+    }
+    
+    @objc private func handleSpeedSettingChange() {
+        updateSpeedMonitoring()
+    }
+    
+    private func updateSpeedMonitoring() {
+        let showSpeed = UserDefaults.standard.bool(forKey: "showConnectionSpeed")
+        
+        if showSpeed {
+            networkMonitor.startMonitoring()
+        } else {
+            networkMonitor.stopMonitoring()
+            DispatchQueue.main.async {
+                self.speedStatusItem.title = "Speed: -"
+            }
+        }
     }
     
     /// Sets up menu item targets
@@ -55,6 +104,7 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
         menu.removeAllItems() // Clean up before adding items
         
         menu.addItem(ethernetStatusItem)
+        menu.addItem(speedStatusItem)
         menu.addItem(NSMenuItem.separator())
         menu.addItem(networkSettingsItem)
         menu.addItem(settingsItem)
@@ -65,9 +115,7 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
     }
     
     /// Starts monitoring ethernet connection status
-    func startMonitoringEthernetStatus(
-        statusUpdate: @escaping (ConnectionStatus) -> Void
-    ) {
+    func startMonitoringEthernetStatus(statusUpdate: @escaping (ConnectionStatus) -> Void) {
         let monitor = NWPathMonitor(requiredInterfaceType: .wiredEthernet)
         
         monitor.pathUpdateHandler = { path in
@@ -85,13 +133,17 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
         monitor.start(queue: DispatchQueue.global(qos: .background))
     }
     
-    /// Updates the status menu item text
     private func updateStatusMenuItem(status: ConnectionStatus) {
         self.ethernetStatusItem.title = "Ethernet: \(status == .Connected ? "Connected" : "Disconnected")"
     }
     
+    func stopMonitoring() {
+        networkMonitor.stopMonitoring()
+    }
+    
     /// Quits the application
     @objc func quitApplication() {
+        stopMonitoring()
         NSApplication.shared.terminate(self)
     }
     

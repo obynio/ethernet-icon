@@ -57,7 +57,7 @@ struct SettingsView: View {
                 .padding(20)
             }
         }
-        .frame(width: 420, height: 220)
+        .frame(width: 420, height: 240)
         .background(Color(NSColor.windowBackgroundColor))
         .cornerRadius(12)
         .shadow(radius: 8)
@@ -135,17 +135,100 @@ struct GeneralSettingsView: View {
 }
 
 struct NetworkSettingsView: View {
-    @AppStorage("selectedOption") var disableWifiOnEthernet: Bool = false
+    @AppStorage("showConnectionSpeed") var showConnectionSpeed: Bool = false
+    @AppStorage("speedUnit") var speedUnit: String = "MB/s"
+    @AppStorage("refreshInterval") var refreshInterval: Double = 1.0
     
     var body: some View {
-        HStack {
-            Text("Disable WiFi on Ethernet")
-            Toggle("", isOn: $disableWifiOnEthernet)
-                .labelsHidden() // Versteckt das Label des Toggles
+        VStack(alignment: .leading, spacing: 16) {
+            // Einheitliches Layout für Labels
+            let labelWidth: CGFloat = 160
+            
+            // Show speed toggle
+            HStack(alignment: .center) {
+                Text("Show connection speed")
+                    .font(.system(size: 14))
+                    .frame(width: labelWidth, alignment: .leading)
+                
+                Toggle("", isOn: $showConnectionSpeed)
+                    .toggleStyle(SwitchToggleStyle(tint: .red))
+            }
+            
+            // Speed unit dropdown
+            HStack(alignment: .center) {
+                Text("Speed unit")
+                    .font(.system(size: 14))
+                    .frame(width: labelWidth, alignment: .leading)
+                
+                Menu {
+                    Button(action: { speedUnit = "KB/s" }) {
+                        Text("KB/s")
+                    }
+                    Button(action: { speedUnit = "MB/s" }) {
+                        Text("MB/s")
+                    }
+                } label: {
+                    dropdownLabel(title: speedUnit)
+                }
+                .frame(width: 120)
+                .disabled(!showConnectionSpeed)
+            }
+            
+            // Refresh interval dropdown
+            HStack(alignment: .center) {
+                Text("Refresh interval")
+                    .font(.system(size: 14))
+                    .frame(width: labelWidth, alignment: .leading)
+                
+                Menu {
+                    Button(action: { refreshInterval = 1.0 }) {
+                        Text("1 second")
+                    }
+                    Button(action: { refreshInterval = 3.0 }) {
+                        Text("3 seconds")
+                    }
+                    Button(action: { refreshInterval = 5.0 }) {
+                        Text("5 seconds")
+                    }
+                    Button(action: { refreshInterval = 10.0 }) {
+                        Text("10 seconds")
+                    }
+                    Button(action: { refreshInterval = 30.0 }) {
+                        Text("30 seconds")
+                    }
+                    Button(action: { refreshInterval = 60.0 }) {
+                        Text("60 seconds")
+                    }
+                } label: {
+                    dropdownLabel(title: "\(Int(refreshInterval)) seconds")
+                }
+                .frame(width: 120)
+                .disabled(!showConnectionSpeed)
+            }
         }
-        .padding()
+        .padding(.horizontal, 16)
+    }
+    
+    /// Dropdown-Label-Styling als Wiederverwendbare Funktion
+    private func dropdownLabel(title: String) -> some View {
+        HStack {
+            Text(title)
+                .foregroundColor(.primary)
+            Spacer()
+            Image(systemName: "chevron.down")
+                .foregroundColor(.gray)
+        }
+        .padding(.horizontal, 10)
+        .padding(.vertical, 6)
+        .background(Color(NSColor.controlBackgroundColor))
+        .cornerRadius(6)
+        .overlay(
+            RoundedRectangle(cornerRadius: 6)
+                .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+        )
     }
 }
+
 
 /// About settings view content
 struct AboutSettingsView: View {
