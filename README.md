@@ -2,7 +2,7 @@
 
 A simple and lightweight macOS menu bar application that shows your Ethernet connection status at a glance.
 
-![Different icon styles](https://i.ibb.co/4Wpm9NR/SCR-20241106-mtht.png)
+![Different icon styles](https://i.ibb.co/kD2KbCs/win.png)
 
 ## Features
 - 🔌 Live ethernet connection status monitoring
