@@ -10,10 +10,8 @@ class NetworkMonitor {
     var onSpeedUpdate: ((Double, Double) -> Void)?
     
     func startMonitoring() {
-        // Holen des refreshInterval-Werts direkt aus UserDefaults
         let refreshInterval = UserDefaults.standard.double(forKey: "refreshInterval")
         
-        // Timer mit dem aktuellen refreshInterval starten
         monitorTimer = DispatchSource.makeTimerSource(queue: DispatchQueue.global(qos: .background))
         monitorTimer?.schedule(deadline: .now(), repeating: refreshInterval)
         monitorTimer?.setEventHandler { [weak self] in
@@ -53,12 +51,6 @@ class NetworkMonitor {
         } else {
             let bytesSent = Double(UInt64.max - lastDataSent + counters.sent)
             uploadSpeed = (bytesSent / timeInterval) / divisor
-        }
-
-        // Wenn in KB/s, rundet die Werte auf die nächste ganze Zahl
-        if useKilobytes {
-            downloadSpeed = round(downloadSpeed)
-            uploadSpeed = round(uploadSpeed)
         }
 
         lastDataReceived = counters.received

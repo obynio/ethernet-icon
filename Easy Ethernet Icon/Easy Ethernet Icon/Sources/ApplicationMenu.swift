@@ -66,7 +66,7 @@ class ApplicationMenu: NSObject, NSWindowDelegate {
             guard let self = self else { return }
             DispatchQueue.main.async {
                 let unit = UserDefaults.standard.string(forKey: "speedUnit") ?? "MB/s"
-                let speedText = String(format: "Speed: %.0f %@ ↓ | %.0f %@ ↑", download, unit, upload, unit)
+                let speedText = String(format: "Speed: %.1f %@ ↓ | %.1f %@ ↑", download, unit, upload, unit)
                 self.speedStatusItem.title = speedText
             }
         }
