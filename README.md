@@ -25,19 +25,15 @@ A simple and lightweight macOS menu bar application that shows your Ethernet con
 7. (Optional) Click the menu bar icon and select Settings to customize
 
 ## Usage
-- The icon in the menu bar shows your current Ethernet connection status
+- The icon in the menu bar shows your current Ethernet connection status and (if enabled) the connection speed
 - Click the icon to:
   - See connection status
+  - See connection speed
   - Access Network Settings
   - Configure app settings
   - Quit the application
 
-## Customization
-Access the Settings menu to:
-- Choose between macOS and Windows style icons
-- Enable/disable Launch at Login
-
-## Building from Source
+## Build from Source
 If you want to build the app yourself:
 1. Clone this repository
 2. Open the project in Xcode
