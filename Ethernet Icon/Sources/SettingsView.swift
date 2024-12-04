@@ -233,16 +233,16 @@ struct NetworkSettingsView: View {
 /// About settings view content
 struct AboutSettingsView: View {
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text("Easy Ethernet Icon")
+        VStack(alignment: .center, spacing: 6) {
+            Text("Ethernet Icon")
                 .font(.system(size: 16, weight: .bold))
             
-            Link("More information", destination: URL(string: "https://github.com/felixblome/easy-ethernet-icon")!)
+            Link("More information", destination: URL(string: "https://github.com/obynio/ethernet-icon")!)
                 .font(.system(size: 14, weight: .medium))
                 .foregroundColor(.accentColor)
                 .padding(.top, 5)
             
-            Text("Made by Felix Blome | v1.2")
+            Text("Made by Shepard")
                 .font(.system(size: 12, weight: .regular))
                 .foregroundColor(.secondary)
                 .padding(.top, 4)
